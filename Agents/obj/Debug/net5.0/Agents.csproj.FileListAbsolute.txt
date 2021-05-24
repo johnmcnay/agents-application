@@ -38,3 +38,4 @@ C:\Users\JohnMcNay\source\repos\Agents\Agents\obj\Debug\net5.0\ref\Agents.dll
 C:\Users\JohnMcNay\source\repos\Agents\Agents\obj\Debug\net5.0\Agents.pdb
 C:\Users\JohnMcNay\source\repos\Agents\Agents\obj\Debug\net5.0\Agents.genruntimeconfig.cache
 C:\Users\JohnMcNay\source\repos\Agents\Agents\obj\Debug\net5.0\Agents.csproj.CopyComplete
+C:\Users\JohnMcNay\source\repos\Agents\Agents\obj\Debug\net5.0\Agents.MvcApplicationPartsAssemblyInfo.cs
