@@ -1,14 +1,27 @@
-﻿@*@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model Books.ViewModels.Home.HomeViewModel
+@model Agents.ViewModels.Home.HomeViewModel
 
 <div class="text-center">
     <h1 class="display-4">Here's some books</h1>
     <p>@Model.Message</p>
 
-    @foreach (var book in Model.Books)
+    <table>
+        <tr>
+            <th>Agent Code</th>
+            <th>Name</th>
+            <th>Working Area</th>
+            <th>Commission</th>
+            <th>Phone Number</th>
+
+        </tr>
+
+
+    </table>
+
+    @foreach (var agent in Model.Agents)
     {
-        <p>@book.Title (@book.Id)</p>
+        <p>@agent.agentCode @agent.name</p>
     }
-</div>*@
+</div>

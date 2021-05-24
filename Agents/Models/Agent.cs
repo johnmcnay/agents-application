@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Agent.Models
+namespace Agents.Models
 {
     public class Agent
     {
@@ -16,6 +16,6 @@ namespace Agent.Models
         public float commission { get; set; }
 
         public string phoneNumber { get; set; }
-        public int id { get; set; }
+        
     }
 }

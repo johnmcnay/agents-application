@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿
+using Agents.ViewModels.Home;
 using Agents.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,9 +21,9 @@ namespace Agents.Controllers
         }
 
         // TODO: This is not where this belongs! We'll continue refactoring and put it elsewhere later.
-        private List<Agents> AllAgentData()
+        private List<Agent> AllAgentData()
         {
-            var agents = new List<Agents>();
+            var agents = new List<Agent>();
 
             //NOTE: DO NOT EVER HARDCODE YOUR CONNECTION STRING IN CODE LIKE THIS
             using (var conn = new SqlConnection("Server=.;Database=AgentDb;Trusted_Connection=True;"))
@@ -38,11 +39,17 @@ namespace Agents.Controllers
 
                 while (reader.Read())
                 {
-                    var name = reader["name"].ToString();
+                    var name = reader["AgentName"].ToString();
+                    var workingArea = reader["WorkingArea"].ToString();
+                    var phoneNumber = reader["PhoneNo"].ToString();
+                    var agentCode = reader["AgentCode"].ToString();
 
-                    agents.Add(new Agents
+                    agents.Add(new Agent
                     {
-                        name = name
+                        name = name,
+                        workingArea = workingArea,
+                        phoneNumber = phoneNumber,
+                        agentCode = agentCode
                     });
                 }
             }
@@ -55,7 +62,6 @@ namespace Agents.Controllers
             var agents = AllAgentData();
 
             var vm = new HomeViewModel();
-            vm.Message = "Look at these wonderful books!";
             vm.Agents = agents;
 
             return View(vm);
@@ -68,9 +74,9 @@ namespace Agents.Controllers
 
         public IActionResult AgentData()
         {
-            var books = AllAgentData();
+            var agents = AllAgentData();
 
-            return Json(books);
+            return Json(agents);
         }
 
         public IActionResult Privacy()
