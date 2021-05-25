@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
@@ -66,6 +67,10 @@ namespace Agents.Models
 
                 var reader = cmd.ExecuteReader();
                 reader.Read();
+                if (reader.HasRows == false)
+                {
+                    return new Agent { };
+                }
                 var name = reader["AgentName"].ToString();
                 var workingArea = reader["WorkingArea"].ToString();
                 var phoneNumber = reader["PhoneNo"].ToString();
