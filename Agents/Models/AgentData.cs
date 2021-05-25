@@ -35,18 +35,44 @@ namespace Agents.Models
                     var workingArea = reader["WorkingArea"].ToString();
                     var phoneNumber = reader["PhoneNo"].ToString();
                     var agentCode = reader["AgentCode"].ToString();
+                    var commission = System.Convert.ToSingle(reader["Commission"]);
 
                     agents.Add(new Agent
                     {
                         name = name,
                         workingArea = workingArea,
                         phoneNumber = phoneNumber,
-                        agentCode = agentCode
+                        agentCode = agentCode,
+                        commission = commission
                     });
                 }
             }
 
             return agents;
+        }
+
+        public Agent GetOne(string agentCode)
+        {
+
+            var connString = _configuration.GetConnectionString("default");
+            using (var conn = new SqlConnection(connString))
+            {
+                conn.Open();
+
+                var cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.CommandText = "SELECT * FROM Agents WHERE AgentCode = '" + agentCode + "'";
+
+                var reader = cmd.ExecuteReader();
+                reader.Read();
+                var name = reader["AgentName"].ToString();
+                var workingArea = reader["WorkingArea"].ToString();
+                var phoneNumber = reader["PhoneNo"].ToString();
+                var commission = System.Convert.ToSingle(reader["Commission"]);
+
+                return new Agent { name = name, workingArea = workingArea, phoneNumber = phoneNumber, agentCode = agentCode, commission = commission };
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Agents.Models;
+using Agents.ViewModels.AgentView;
 using Agents.ViewModels.Home;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Books.Controllers
+namespace Agents.Controllers
 {
     public class HomeController : Controller
     {
@@ -30,29 +31,26 @@ namespace Books.Controllers
             var agents = _agentData.AllAgentData();
 
             var vm = new HomeViewModel();
-            vm.Agents= agents;
+            vm.Agents = agents;
 
             return View(vm);
         }
 
-        public IActionResult BooksWithAjax()
-        {
-            return View();
-        }
-
         public IActionResult AgentData()
         {
-            var books = _agentData.AllAgentData();
+            var agents = _agentData.AllAgentData();
 
-            return Json(books);
+            return Json(agents);
         }
 
-        //Home/Book/42
-        public IActionResult Agent(int? id)
+        //Home/Agent/A001
+        public IActionResult Agent(string id)
         {
-            // TODO: Use the id passed and go get the book data.
-            // Use that book data to create a new view.
-            return View();
+            var vm = new AgentViewModel();
+
+            vm.agent = _agentData.GetOne(id);
+
+            return View(vm);
         }
 
         public IActionResult Privacy()

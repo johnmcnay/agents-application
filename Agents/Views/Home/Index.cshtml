@@ -18,10 +18,10 @@
         {
 
             <tr>
-                <td>@agent.agentCode</td>
+                <td><a href='@("/Home/Agent/"+ @agent.agentCode)'>@agent.agentCode</a></td>
                 <td>@agent.name</td>
                 <td>@agent.workingArea</td>
-                <td>0</td>
+                <td>@agent.commission</td>
                 <td>@agent.phoneNumber</td>
             </tr>
             
