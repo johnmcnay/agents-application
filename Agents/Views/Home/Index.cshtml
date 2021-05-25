@@ -4,9 +4,6 @@
 @model Agents.ViewModels.Home.HomeViewModel
 
 <div class="text-center">
-    <h1 class="display-4">Here's some books</h1>
-    <p>@Model.Message</p>
-
     <table>
         <tr>
             <th>Agent Code</th>
@@ -17,11 +14,38 @@
 
         </tr>
 
+        @foreach (var agent in Model.Agents)
+        {
+
+            <tr>
+                <td>@agent.agentCode</td>
+                <td>@agent.name</td>
+                <td>@agent.workingArea</td>
+                <td>0</td>
+                <td>@agent.phoneNumber</td>
+            </tr>
+            
+        }
+
 
     </table>
 
-    @foreach (var agent in Model.Agents)
-    {
-        <p>@agent.agentCode @agent.name</p>
-    }
+    <style>
+        table {
+            width: 100%;
+        }
+
+        tr {
+            border: solid gray 1px;
+            border-left: 0px;
+            border-right: 0px;
+        }
+
+        td, th {
+            padding: 10px;
+        }
+
+    </style>
+
+    
 </div>
