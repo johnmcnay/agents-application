@@ -1,82 +1,58 @@
-﻿
+﻿using Agents.Models;
 using Agents.ViewModels.Home;
-using Agents.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Agents.Controllers
+namespace Books.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration _configuration;
+        private readonly AgentData _agentData;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, AgentData bookData)
         {
             _logger = logger;
-        }
-
-        // TODO: This is not where this belongs! We'll continue refactoring and put it elsewhere later.
-        private List<Agent> AllAgentData()
-        {
-            var agents = new List<Agent>();
-
-            //NOTE: DO NOT EVER HARDCODE YOUR CONNECTION STRING IN CODE LIKE THIS
-            using (var conn = new SqlConnection("Server=.;Database=AgentDb;Trusted_Connection=True;"))
-            {
-                conn.Open();
-
-                var cmd = new SqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = "SELECT * FROM Agents";
-
-                var reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    var name = reader["AgentName"].ToString();
-                    var workingArea = reader["WorkingArea"].ToString();
-                    var phoneNumber = reader["PhoneNo"].ToString();
-                    var agentCode = reader["AgentCode"].ToString();
-
-                    agents.Add(new Agent
-                    {
-                        name = name,
-                        workingArea = workingArea,
-                        phoneNumber = phoneNumber,
-                        agentCode = agentCode
-                    });
-                }
-            }
-
-            return agents;
+            _configuration = configuration;
+            _agentData = bookData;
         }
 
         public IActionResult Index()
         {
-            var agents = AllAgentData();
+            var agents = _agentData.AllAgentData();
 
             var vm = new HomeViewModel();
-            vm.Agents = agents;
+            vm.Agents= agents;
 
             return View(vm);
         }
 
-        public IActionResult AgentsWithAjax()
+        public IActionResult BooksWithAjax()
         {
             return View();
         }
 
         public IActionResult AgentData()
         {
-            var agents = AllAgentData();
+            var books = _agentData.AllAgentData();
 
-            return Json(agents);
+            return Json(books);
+        }
+
+        //Home/Book/42
+        public IActionResult Agent(int? id)
+        {
+            // TODO: Use the id passed and go get the book data.
+            // Use that book data to create a new view.
+            return View();
         }
 
         public IActionResult Privacy()
