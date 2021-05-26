@@ -63,9 +63,12 @@ namespace Agents.Models
                 var cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandType = System.Data.CommandType.Text;
-                cmd.CommandText = "SELECT * FROM Agents WHERE AgentCode = '" + agentCode + "'";
+                cmd.CommandText = @"SELECT * FROM Agents WHERE AgentCode = @agentCode";
 
-                var reader = cmd.ExecuteReader();
+                SqlCommand dbCommand = new SqlCommand(cmd.CommandText, conn);
+                dbCommand.Parameters.AddWithValue("@agentCode", agentCode);
+                
+                var reader = dbCommand.ExecuteReader();
                 reader.Read();
                 if (reader.HasRows == false)
                 {
@@ -76,7 +79,14 @@ namespace Agents.Models
                 var phoneNumber = reader["PhoneNo"].ToString();
                 var commission = System.Convert.ToSingle(reader["Commission"]);
 
-                return new Agent { name = name, workingArea = workingArea, phoneNumber = phoneNumber, agentCode = agentCode, commission = commission };
+                return new Agent
+                { 
+                    name = name,
+                    workingArea = workingArea,
+                    phoneNumber = phoneNumber,
+                    agentCode = agentCode,
+                    commission = commission
+                };
             }
         }
     }
