@@ -30,30 +30,11 @@ namespace Agents.Models
                 
                 while (reader.Read())
                 {
-                    agents.Add(createAgent(reader));
+                    agents.Add(new Agent(reader));
                 }
             }
 
             return agents;
-        }
-
-
-        public Agent createAgent(SqlDataReader reader)
-        {
-            var name = reader["AgentName"].ToString();
-            var workingArea = reader["WorkingArea"].ToString();
-            var phoneNumber = reader["PhoneNo"].ToString();
-            var agentCode = reader["AgentCode"].ToString();
-            var commission = System.Convert.ToSingle(reader["Commission"]);
-            
-            return new Agent
-            {
-                name = name,
-                workingArea = workingArea,
-                phoneNumber = phoneNumber,
-                agentCode = agentCode,
-                commission = commission
-            };
         }
 
         public Agent GetOne(string agentCode)
@@ -76,7 +57,7 @@ namespace Agents.Models
                     return new Agent { };
                 }
 
-                return createAgent(reader);
+                return new Agent(reader);
             }
         }
     }
