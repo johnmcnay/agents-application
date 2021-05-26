@@ -52,10 +52,6 @@ namespace Agents.Models
                 
                 var reader = dbCommand.ExecuteReader();
                 reader.Read();
-                if (reader.HasRows == false)
-                {
-                    return new Agent { };
-                }
 
                 return new Agent(reader);
             }

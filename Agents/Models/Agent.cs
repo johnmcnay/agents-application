@@ -11,11 +11,14 @@ namespace Agents.Models
 
         public Agent(SqlDataReader reader)
         {
-            name = reader["AgentName"].ToString();
-            workingArea = reader["WorkingArea"].ToString();
-            phoneNumber = reader["PhoneNo"].ToString();
-            agentCode = reader["AgentCode"].ToString();
-            commission = System.Convert.ToSingle(reader["Commission"]);
+            if (reader.HasRows)
+            {
+                name = reader["AgentName"].ToString();
+                workingArea = reader["WorkingArea"].ToString();
+                phoneNumber = reader["PhoneNo"].ToString();
+                agentCode = reader["AgentCode"].ToString();
+                commission = System.Convert.ToSingle(reader["Commission"]);
+            }
         }
 
         public Agent()
