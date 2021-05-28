@@ -62,9 +62,23 @@ namespace Agents.Controllers
         [HttpPost]
         public IActionResult NewAgent(Agent agent)
         {
-            
-            
-            return RedirectToAction("Index");
+            var connString = _configuration.GetConnectionString("default");
+            using (var conn = new SqlConnection(connString))
+            {
+                conn.Open();
+
+                string CommandText = "INSERT INTO Agents VALUES (@agentCode, @name, @workingArea, @commission, @phoneNumber);";
+
+                SqlCommand dbCommand = new SqlCommand(CommandText, conn);
+                dbCommand.Parameters.AddWithValue("@agentCode", agent.agentCode);
+                dbCommand.Parameters.AddWithValue("@name", agent.name);
+                dbCommand.Parameters.AddWithValue("@workingArea", agent.workingArea);
+                dbCommand.Parameters.AddWithValue("@commission", agent.commission);
+                dbCommand.Parameters.AddWithValue("@phoneNumber", agent.phoneNumber);
+                dbCommand.ExecuteNonQuery();
+            }
+
+                return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

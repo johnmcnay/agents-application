@@ -9,23 +9,23 @@
     <div style="display: flex; flex-direction: column;">
         <label>
             Agent Code:
-            <input name="agentCode" type="text" />
+            <input name="agentCode" type="text" maxlength="4" required/>
         </label>
         <label>
             Name:
-            <input name="name" type="text" />
+            <input name="name" type="text" maxlength="40" required/>
         </label>
         <label>
             Working Area:
-            <input name="workingArea" type="text" />
+            <input name="workingArea" type="text" maxlength="35" required/>
         </label>
         <label>
             Commission:
-            <input name="commission" type="number" />
+            <input name="commission" type="number" min="0" max="100"required/>
         </label>
         <label>
             Phone Number:
-            <input name="phoneNumber" type="text" />
+            <input name="phoneNumber" type="text" maxlength="10" required/>
         </label>
         <style>
             label {
