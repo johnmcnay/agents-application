@@ -4,6 +4,16 @@
 @model Agents.ViewModels.Home.HomeViewModel
 
 <div>
+    <button id="new-agent">New Agent</button>
+
+    <script>
+        const newBtn = document.querySelector("#new-agent");
+
+        newBtn.addEventListener("click", () => {
+
+            location.href = "/Home/NewAgent";
+        });
+    </script>
     <table>
         <tr>
             <th>Agent Code</th>

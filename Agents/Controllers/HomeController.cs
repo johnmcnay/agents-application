@@ -53,6 +53,20 @@ namespace Agents.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        public IActionResult NewAgent()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult NewAgent(Agent agent)
+        {
+            
+            
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Privacy()
         {
             return View();
