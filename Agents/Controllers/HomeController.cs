@@ -19,11 +19,11 @@ namespace Agents.Controllers
         private readonly IConfiguration _configuration;
         private readonly AgentData _agentData;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, AgentData bookData)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, AgentData agentData)
         {
             _logger = logger;
             _configuration = configuration;
-            _agentData = bookData;
+            _agentData = agentData;
         }
 
         public IActionResult Index()
@@ -80,12 +80,16 @@ namespace Agents.Controllers
         [HttpPost]
         public IActionResult NewAgent(Agent agent)
         {
+            //Agent existingAgent = _agentData.GetOne(agent.agentCode);
+
+            //Console.WriteLine(existingAgent);
+
             var connString = _configuration.GetConnectionString("default");
             using (var conn = new SqlConnection(connString))
             {
                 conn.Open();
 
-                string CommandText = "INSERT INTO Agents VALUES (@agentCode, @name, @workingArea, @commission, @phoneNumber);";
+                string CommandText = "INSERT INTO Agents VALUES (@agentCode, @name, @workingArea, @commission, @phoneNumber, @isActive);";
 
                 SqlCommand dbCommand = new SqlCommand(CommandText, conn);
                 dbCommand.Parameters.AddWithValue("@agentCode", agent.agentCode);
@@ -93,10 +97,11 @@ namespace Agents.Controllers
                 dbCommand.Parameters.AddWithValue("@workingArea", agent.workingArea);
                 dbCommand.Parameters.AddWithValue("@commission", agent.commission);
                 dbCommand.Parameters.AddWithValue("@phoneNumber", agent.phoneNumber);
+                dbCommand.Parameters.AddWithValue("@isActive", 1);
                 dbCommand.ExecuteNonQuery();
             }
 
-                return RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()
