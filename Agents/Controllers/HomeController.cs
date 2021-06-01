@@ -28,7 +28,7 @@ namespace Agents.Controllers
 
         public IActionResult Index()
         {
-            var agents = _agentData.AllAgentData();
+            var agents = _agentData.ActiveAgentData();
 
             var vm = new HomeViewModel();
             vm.Agents = agents;
@@ -57,6 +57,24 @@ namespace Agents.Controllers
         public IActionResult NewAgent()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAgent(string id) 
+        {
+            var connString = _configuration.GetConnectionString("default");
+            using (var conn = new SqlConnection(connString))
+            {
+                conn.Open();
+
+                string CommandText = "UPDATE Agents SET isActive = 0 WHERE AgentCode = @agentCode";
+
+                SqlCommand dbCommand = new SqlCommand(CommandText, conn);
+                dbCommand.Parameters.AddWithValue("@agentCode", id);
+                dbCommand.ExecuteNonQuery();
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

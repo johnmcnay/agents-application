@@ -5,3 +5,7 @@
 <p>Working Area: @Model.agent.workingArea</p>
 <p>Commission: @Model.agent.commission</p>
 <p>Phone Number: @Model.agent.phoneNumber</p>
+
+<form id="delete-form" method="post" action="/Home/DeleteAgent/@Model.agent.agentCode">
+    <button id="delete-btn" type="submit">Delete</button>
+</form>

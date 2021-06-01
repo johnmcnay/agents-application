@@ -37,6 +37,31 @@ namespace Agents.Models
             return agents;
         }
 
+        public List<Agent> ActiveAgentData()
+        {
+
+            var agents = new List<Agent>();
+
+            var connString = _configuration.GetConnectionString("default");
+            using (var conn = new SqlConnection(connString))
+            {
+                conn.Open();
+
+                string CommandText = "SELECT * FROM Agents WHERE isActive = 1";
+
+                SqlCommand dbCommand = new SqlCommand(CommandText, conn);
+                var reader = dbCommand.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    agents.Add(new Agent(reader));
+                }
+            }
+
+            return agents;
+
+        }
+
         public Agent GetOne(string agentCode)
         {
 
