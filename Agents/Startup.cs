@@ -52,6 +52,10 @@ namespace Agents
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "agent",
+                    pattern: "agent/{id?}",
+                    new { controller = "Agent", action = "Access" });
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });

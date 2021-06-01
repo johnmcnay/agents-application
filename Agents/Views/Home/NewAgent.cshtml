@@ -9,7 +9,7 @@
     <div style="display: flex; flex-direction: column;">
         <label>
             Agent Code:
-            <input name="agentCode" type="text" maxlength="4" required/>
+            <input name="agentCode" type="text" maxlength="4" pattern="[A-Z][0-9]{3}" required/>
         </label>
         <label>
             Name:
@@ -34,5 +34,4 @@
         </style>
     </div>
     <button type="submit">Submit</button>
-
 </form>
