@@ -62,17 +62,7 @@ namespace Agents.Controllers
         [HttpPost]
         public IActionResult DeleteAgent(string id) 
         {
-            var connString = _configuration.GetConnectionString("default");
-            using (var conn = new SqlConnection(connString))
-            {
-                conn.Open();
-
-                string CommandText = "UPDATE Agents SET isActive = 0 WHERE AgentCode = @agentCode";
-
-                SqlCommand dbCommand = new SqlCommand(CommandText, conn);
-                dbCommand.Parameters.AddWithValue("@agentCode", id);
-                dbCommand.ExecuteNonQuery();
-            }
+            _agentData.DeleteAgent(id);
 
             return RedirectToAction("Index");
         }
@@ -84,22 +74,8 @@ namespace Agents.Controllers
 
             //Console.WriteLine(existingAgent);
 
-            var connString = _configuration.GetConnectionString("default");
-            using (var conn = new SqlConnection(connString))
-            {
-                conn.Open();
 
-                string CommandText = "INSERT INTO Agents VALUES (@agentCode, @name, @workingArea, @commission, @phoneNumber, @isActive);";
-
-                SqlCommand dbCommand = new SqlCommand(CommandText, conn);
-                dbCommand.Parameters.AddWithValue("@agentCode", agent.agentCode);
-                dbCommand.Parameters.AddWithValue("@name", agent.name);
-                dbCommand.Parameters.AddWithValue("@workingArea", agent.workingArea);
-                dbCommand.Parameters.AddWithValue("@commission", agent.commission);
-                dbCommand.Parameters.AddWithValue("@phoneNumber", agent.phoneNumber);
-                dbCommand.Parameters.AddWithValue("@isActive", 1);
-                dbCommand.ExecuteNonQuery();
-            }
+            _agentData.AddAgent(agent);
 
             return RedirectToAction("Index");
         }
