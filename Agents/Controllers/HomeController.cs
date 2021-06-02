@@ -60,6 +60,15 @@ namespace Agents.Controllers
         }
 
         [HttpPost]
+        public IActionResult EditAgent(Agent agent, string originalCode)
+        {
+
+            _agentData.EditAgent(agent, originalCode);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public IActionResult DeleteAgent(string id) 
         {
             _agentData.DeleteAgent(id);
@@ -70,11 +79,7 @@ namespace Agents.Controllers
         [HttpPost]
         public IActionResult NewAgent(Agent agent)
         {
-            //Agent existingAgent = _agentData.GetOne(agent.agentCode);
-
-            //Console.WriteLine(existingAgent);
-
-
+         
             _agentData.AddAgent(agent);
 
             return RedirectToAction("Index");

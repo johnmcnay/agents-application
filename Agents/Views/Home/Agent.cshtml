@@ -1,11 +1,77 @@
 ﻿@model Agents.ViewModels.AgentView.AgentViewModel
+<div id="agent-display">
+    <p>Agent Code: @Model.agent.agentCode</p>
+    <p>Name: @Model.agent.name</p>
+    <p>Working Area: @Model.agent.workingArea</p>
+    <p>Commission: @Model.agent.commission</p>
+    <p>Phone Number: @Model.agent.phoneNumber</p>
+</div>
+<div id="agent-edit" style="display: none;">
+    <form id="save-btn" method="post" action="/Home/EditAgent">
+            <label>
+                Agent Code:
+                <input name="agentCode" type="text" maxlength="4" required value="@Model.agent.agentCode" />
+            </label>
+            <label>
+                Name:
+                <input name="name" type="text" maxlength="40" required value="@Model.agent.name" />
+            </label>
+            <label>
+                Working Area:
+                <input name="workingArea" type="text" maxlength="35" required value="@Model.agent.workingArea" />
+            </label>
+            <label>
+                Commission:
+                <input name="commission" type="number" min="0" max="100" required value="@Model.agent.commission" />
+            </label>
+            <label>
+                Phone Number:
+                <input name="phoneNumber" type="text" maxlength="10" required value="@Model.agent.phoneNumber" />
+            </label>
+            <style>
+                label {
+                    width: 150px;
+                    display: inline-block;
+                }
+            </style>
+        <button id="cancel-btn" style="display: none;">Cancel</button>
+        <input type="hidden" value="@Model.agent.agentCode" name="originalCode" />
+        <button type="submit">Save</button>
+    </form>
 
-<p>Agent Code: @Model.agent.agentCode</p>
-<p>Name: @Model.agent.name</p>
-<p>Working Area: @Model.agent.workingArea</p>
-<p>Commission: @Model.agent.commission</p>
-<p>Phone Number: @Model.agent.phoneNumber</p>
+</div>
 
-<form id="delete-form" method="post" action="/Home/DeleteAgent/@Model.agent.agentCode">
+<form id="delete-form" method="post" action="/Home/DeleteAgent/@Model.agent.agentCode" style="display: inline-block">
     <button id="delete-btn" type="submit">Delete</button>
 </form>
+<button id="edit-btn" style="display:inline-block">Edit</button>
+
+
+<script>
+    const editBtn = document.querySelector("#edit-btn");
+    const deleteForm = document.querySelector("#delete-form");
+    const saveBtn = document.querySelector("#save-btn");
+    const cancelBtn = document.querySelector("#cancel-btn");
+    const agentDisplay = document.querySelector("#agent-display")
+    const agentEdit = document.querySelector("#agent-edit");
+
+    editBtn.addEventListener("click", () => {
+        deleteForm.style.display = "none";
+        editBtn.style.display = "none";
+        saveBtn.style.display = "inline-block";
+        cancelBtn.style.display = "inline-block";
+        agentDisplay.style.display = "none";
+        agentEdit.style.display = "inline-block";
+    });
+
+    cancelBtn.addEventListener("click", () => {
+        agentEdit.style.display = "none";
+        agentDisplay.style.display = "block";
+        editBtn.style.display = "inline-block";
+        deleteForm.style.display = "inline-block";
+        cancelBtn.style.display = "none";
+        saveBtn.style.display = "none"
+    });
+
+
+</script>

@@ -62,6 +62,31 @@ namespace Agents.Models
 
         }
 
+        internal void EditAgent(Agent agent, string originalCode)
+        {
+            var connString = _configuration.GetConnectionString("default");
+            using (var conn = new SqlConnection(connString))
+            {
+                conn.Open();
+
+                string CommandText = "UPDATE Agents SET " +
+                    "AgentCode = @agentCode, " +
+                    "AgentName = @name, " +
+                    "WorkingArea = @workingArea, " +
+                    "Commission = @commission, " +
+                    "PhoneNo = @phoneNumber WHERE AgentCode = @originalCode";
+
+                SqlCommand dbCommand = new SqlCommand(CommandText, conn);
+                dbCommand.Parameters.AddWithValue("@agentCode", agent.agentCode);
+                dbCommand.Parameters.AddWithValue("@name", agent.name);
+                dbCommand.Parameters.AddWithValue("@workingArea", agent.workingArea);
+                dbCommand.Parameters.AddWithValue("@commission", agent.commission);
+                dbCommand.Parameters.AddWithValue("@phoneNumber", agent.phoneNumber);
+                dbCommand.Parameters.AddWithValue("@originalCode", originalCode);
+                dbCommand.ExecuteNonQuery();
+            }
+        }
+
         internal void DeleteAgent(string id)
         {
             var connString = _configuration.GetConnectionString("default");
