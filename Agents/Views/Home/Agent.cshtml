@@ -22,7 +22,7 @@
             </label>
             <label>
                 Commission:
-                <input name="commission" type="number" min="0" max="100" required value="@Model.agent.commission" />
+                <input name="commission" type="number" min="0" max="100" required value="@Model.agent.commission" step="any"/>
             </label>
             <label>
                 Phone Number:
@@ -31,7 +31,7 @@
             <style>
                 label {
                     width: 150px;
-                    display: inline-block;
+                    display: block;
                 }
             </style>
         <button id="cancel-btn" style="display: none;">Cancel</button>
