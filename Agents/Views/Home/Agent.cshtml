@@ -64,7 +64,9 @@
         agentEdit.style.display = "inline-block";
     });
 
-    cancelBtn.addEventListener("click", () => {
+    cancelBtn.addEventListener("click", e => {
+        e.preventDefault();
+
         agentEdit.style.display = "none";
         agentDisplay.style.display = "block";
         editBtn.style.display = "inline-block";
