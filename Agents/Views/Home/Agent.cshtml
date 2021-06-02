@@ -5,6 +5,11 @@
     <p>Working Area: @Model.agent.workingArea</p>
     <p>Commission: @Model.agent.commission</p>
     <p>Phone Number: @Model.agent.phoneNumber</p>
+
+    <form id="delete-form" method="post" action="/Home/DeleteAgent/@Model.agent.agentCode" style="display: inline-block">
+        <button id="delete-btn" type="submit">Delete</button>
+    </form>
+    <button id="edit-btn" style="display:inline-block">Edit</button>
 </div>
 <div id="agent-edit" style="display: none;">
     <form id="save-btn" method="post" action="/Home/EditAgent">
@@ -34,32 +39,20 @@
                     display: block;
                 }
             </style>
-        <button id="cancel-btn" style="display: none;">Cancel</button>
+        <button id="cancel-btn">Cancel</button>
         <input type="hidden" value="@Model.agent.agentCode" name="originalCode" />
         <button type="submit">Save</button>
     </form>
 
 </div>
 
-<form id="delete-form" method="post" action="/Home/DeleteAgent/@Model.agent.agentCode" style="display: inline-block">
-    <button id="delete-btn" type="submit">Delete</button>
-</form>
-<button id="edit-btn" style="display:inline-block">Edit</button>
-
-
 <script>
     const editBtn = document.querySelector("#edit-btn");
-    const deleteForm = document.querySelector("#delete-form");
-    const saveBtn = document.querySelector("#save-btn");
     const cancelBtn = document.querySelector("#cancel-btn");
     const agentDisplay = document.querySelector("#agent-display")
     const agentEdit = document.querySelector("#agent-edit");
 
     editBtn.addEventListener("click", () => {
-        deleteForm.style.display = "none";
-        editBtn.style.display = "none";
-        saveBtn.style.display = "inline-block";
-        cancelBtn.style.display = "inline-block";
         agentDisplay.style.display = "none";
         agentEdit.style.display = "inline-block";
     });
@@ -69,11 +62,6 @@
 
         agentEdit.style.display = "none";
         agentDisplay.style.display = "block";
-        editBtn.style.display = "inline-block";
-        deleteForm.style.display = "inline-block";
-        cancelBtn.style.display = "none";
-        saveBtn.style.display = "none"
+       
     });
-
-
 </script>
